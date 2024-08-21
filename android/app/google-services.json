@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "652955042348",
+    "project_id": "shoping-time-561d2",
+    "storage_bucket": "shoping-time-561d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652955042348:android:d839b3c3bdb5e869c20789",
+        "android_client_info": {
+          "package_name": "com.example.shoping_time"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXxtlBO8JKRIZHyH1kPO4FZ2xzpvB44o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
