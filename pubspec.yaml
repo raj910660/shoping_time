@@ -28,7 +28,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  carousel_slider:
   flutter:
     sdk: flutter
 
@@ -38,8 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.27.0
   firebase_auth: ^4.17.8
+  carousel_slider:
   get:
   lottie:
+  image_picker:
+  google_mobile_ads:
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
   assets:
      - assets/
      - assets/lottie/
+     - assets/movie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

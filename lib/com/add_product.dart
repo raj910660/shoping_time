@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoping_time/com/productcard.dart';
+import 'package:shoping_time/com/add_productcard.dart';
 
 class Addproduct extends StatelessWidget {
   const Addproduct({super.key});
@@ -8,7 +8,7 @@ class Addproduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product List'),
+        title: const Text('Card'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),

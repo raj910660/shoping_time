@@ -1,72 +1,89 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shoping_time/categoryitem_screen/Fashion.dart';
+import 'package:shoping_time/categoryitem_screen/Movies.dart';
+import 'package:shoping_time/categoryitem_screen/TV-Time.dart';
 import 'package:shoping_time/com/ServiceItem.dart';
-import 'package:shoping_time/com/bottomnavigationbar.dart';
 import 'package:shoping_time/com/categoryslider.dart';
 import 'package:shoping_time/com/slider.dart';
 
 import 'CategoryItem.dart';
+import 'SearchBar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  BannerAd? _bannerAd;
+
+
+  // TODO: replace this test ad unit with your own ad unit.
+  final adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/6300978111'
+      : 'ca-app-pub-3940256099942544/2934735716';
+
+  /// Loads a banner ad.
+  void loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {
+          });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, error) {
+          debugPrint('BannerAd failed to load: $error');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void initState() {
+    loadAd();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent.shade200,
-        // leading: Icon(Icons.menu, color: Colors.black),
-        title: const SearchBar(
-          hintText: 'Search Amazon.in',
-          leading: Icon(Icons.search, color: Colors.black),
-        ),
+        backgroundColor: Colors.white,
+        leading: Image.asset('assets/one8.png'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.camera_alt, color: Colors.black),
+            icon: const Icon(CupertinoIcons.search,
+                size: 28, color: Colors.black),
+            onPressed: () {
+              Get.to(const SearchBars());
+            },
+          ),
+          IconButton(
+            icon: const Icon(CupertinoIcons.camera,
+                size: 28, color: Colors.black),
             onPressed: () {},
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.mic, color: Colors.black),
+            icon: const Icon(CupertinoIcons.mic, size: 28, color: Colors.black),
           ),
         ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.cyanAccent,
-              ),
-              child: Text('Amazon'),
-            ),
-            ListTile(
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Your Orders'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Buy Again'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Customer Service'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -90,50 +107,52 @@ class HomePage extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                children: const [
+                children: [
                   CategoryItem(
-                    image: 'assets/prime_day.png',
-                    text: 'prime_day',
+                    ontap: () {
+                      Get.to(const Movies());
+                    },
+                    image: 'assets/movies.png',
+                    text: 'Movies',
                   ),
                   CategoryItem(
-                    image: 'assets/prime.png',
-                    text: 'Prime',
-                  ),
-                  CategoryItem(
-                    image: 'assets/deals.png',
-                    text: 'Deals',
-                  ),
-                  CategoryItem(
+                    ontap: () {
+                      Get.to(Fashion());
+                    },
                     image: 'assets/fashion.png',
                     text: 'Fashion',
                   ),
                   CategoryItem(
+                    ontap: () {
+                      Get.to(TvTime());
+                    },
                     image: 'assets/tvtime.png',
                     text: 'TV-Time',
                   ),
                   CategoryItem(
+                    ontap: () {},
                     image: 'assets/groceries.png',
                     text: 'Groceries',
                   ),
                   CategoryItem(
+                    ontap: () {},
                     image: 'assets/electronics.png',
                     text: 'Electronics',
                   ),
                   CategoryItem(
+                    ontap: () {},
                     image: 'assets/home.png',
                     text: 'Home',
                   ),
                   CategoryItem(
+                    ontap: () {},
                     image: 'assets/mobiles.png',
                     text: 'Mobiles',
                   ),
                   CategoryItem(
+                    ontap: () {},
                     image: 'assets/pharmacy.png',
                     text: 'Pharmacy',
-                  ),
-                  CategoryItem(
-                    image: 'assets/movies.png',
-                    text: 'Movies',
                   ),
                 ],
               ),
@@ -275,33 +294,22 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsetsDirectional.all(15),
-              height: 1400,
+              height: 1000,
               child: const categoryslider(),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Deals for you',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SafeArea(
+                child: SizedBox(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd!),
+                ),
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-              border: Border.all(width: 2, color: Colors.black),
-              color: Colors.white),
-          child: CustomNavBar()),
     );
   }
 }
